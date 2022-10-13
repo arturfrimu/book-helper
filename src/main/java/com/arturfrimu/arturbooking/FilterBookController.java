@@ -23,7 +23,7 @@ public class FilterBookController {
 
         return Arrays.stream(listOfFiles)
                 .map(File::getName)
-                .map(fileName -> getExtensionByStringHandling(fileName).orElse(""))
+                .filter(fileName -> filter(extension, getExtensionByStringHandling(fileName).orElse("")))
                 .collect(Collectors.toSet());
     }
 
@@ -31,5 +31,9 @@ public class FilterBookController {
         return Optional.ofNullable(filename)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1));
+    }
+
+    public boolean filter(Set<String> extension, String fileName) {
+        return extension.contains(fileName);
     }
 }
